@@ -23,7 +23,7 @@ report.show_html("./report.html")
 #using feature engineering to tell location of the house
 
 geolocator = Nominatim(user_agent= 'geaoapiExercises')
-print(geolocator.reverse("37.88"  +  ","  +  "-122.23")[0])
+print(geolocator.reverse("37.88"  +  ","  +  "-122.23").raw['address'])
 
 
 
@@ -33,20 +33,23 @@ def location(cord):
 
     location = geolocator.reverse(Latitude+","+Longitude).raw['address']
 
-if location.get('Road') is None:
-    location['Road'] = None
+    if location.get('Road') is None:
 
-if location.get('Country') is None:
-    location['Country'] = None
+        location['Road'] = None
 
-loc_update['Country'].append(location['Country'])
-loc_update['Road'].append(location['Road'])   
+    if location.get('Country') is None:
 
-#loc_update = {"Country":[],"Road":[],"Neighbourhood":[]}
+        location['Country'] = None
 
-#for i,cord in enumerate(df.iloc[:,6:-1].values):
- #   location(cord)
-  #  pickle.dump(loc_update,open('loc_update.pickle','wb'))
+    loc_update['Country'].append(location['Country'])
+    loc_update['Road'].append(location['Road'])   
 
-   # if i%100 == 0:
-    #    print(i)
+loc_update = {"Country":[],"Road":[],"Neighbourhood":[]}
+
+for i,cord in enumerate(df.iloc[:,6:-1].values):
+
+    location(cord)
+    pickle.dump(loc_update,open('loc_update.pickle','wb'))
+
+    if i%100 == 0:
+        print(i)
