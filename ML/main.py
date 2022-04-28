@@ -53,3 +53,32 @@ for i,cord in enumerate(df.iloc[:,6:-1].values):
 
     if i%100 == 0:
         print(i)
+
+for in in range(df.shape[0]):
+    if df['Road'][i] is None:
+        missing_idx.append(i)
+
+missing_Road_X_train = np.array([[df['MedInc'][i].df['AverageRooms'][i],df['AveBedrms'][i]']]])
+
+missing_Road_y_train = np.array[df('Road')][i] for i in range(df.shape[0]) if i not in missing_idx])
+missing_Road_X_test = np.array()
+
+from sklearn.linear_model import SGDClassifier
+#model initialization
+
+model_1 = SGDClassifier()
+#MODEL TRAINING
+model_1.fit(missing_Road_X_train,missing_Road_y_train)
+
+missing_Road_X_test = model_1.predict(missing_Road_X_test)
+
+#addd model back to dataa frame
+for n,i  in enumerate(missing_idx):
+    df['Road'][i] = missing_Road_y_pred[n]
+
+print(df.info())
+
+from sklearn.preprocessing import LabelEncoder
+
+le = LabelEncoder()
+df['Road'] = le.fit_transform(df['Road'])
